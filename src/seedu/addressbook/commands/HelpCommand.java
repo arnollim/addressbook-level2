@@ -11,10 +11,6 @@ public class HelpCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
             + "Example: " + COMMAND_WORD;
 
-
-    public static final String MESSAGE_INFO = "For more information, go to:\n" +
-            " https://github.com/nus-cs2103-AY1718S1/addressbook-level2";
-    //Hope this works 
     public HelpCommand() {}
 
     @Override
