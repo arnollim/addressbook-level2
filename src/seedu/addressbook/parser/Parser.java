@@ -40,6 +40,7 @@ public class Parser {
                     + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
+                    + " (?<isDobPrivate>p?)d/(?<dob>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
     public static final Pattern WHY_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
@@ -137,6 +138,9 @@ public class Parser {
 
                     matcher.group("address"),
                     isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
+
+                    matcher.group("dob"),
+                    isPrivatePrefixPresent(matcher.group("isDobPrivate")),
 
                     getTagsFromArgs(matcher.group("tagArguments"))
             );
