@@ -2,6 +2,9 @@ package seedu.addressbook.commands;
 
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -20,6 +23,22 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
-        return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
+        List<ReadOnlyPerson> temp = new ArrayList<>();
+        for (ReadOnlyPerson person: addressBook.getAllPersons()) {
+            temp.add(person);
+        }
+        Comparator<ReadOnlyPerson> ALPHA_ORDER = new Comparator<ReadOnlyPerson>() {
+            public int compare(ReadOnlyPerson first, ReadOnlyPerson second) {
+                int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
+                if (x== 0) {
+                    x = (first.getName().fullName).compareTo(second.getName().fullName);
+                }
+                return x;
+                //return first.getName().fullName.toUpperCase().compareTo(second.getName().fullName.toUpperCase());
+            }
+        };
+        Collections.sort(temp, ALPHA_ORDER);
+        //return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
+        return new CommandResult(getMessageForPersonListShownSummary(temp), temp);
     }
 }
