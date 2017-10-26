@@ -34,11 +34,9 @@ public class ListCommand extends Command {
                     x = (first.getName().fullName).compareTo(second.getName().fullName);
                 }
                 return x;
-                //return first.getName().fullName.toUpperCase().compareTo(second.getName().fullName.toUpperCase());
             }
         };
         Collections.sort(temp, ALPHA_ORDER);
-        //return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
         return new CommandResult(getMessageForPersonListShownSummary(temp), temp);
     }
 }
