@@ -41,13 +41,15 @@ public class PrintCommand extends Command {
         String timeStamp = new SimpleDateFormat("dd/MM/YYYY" + " "+ "HH:mm:ss").format(new Date());
         lines.add("Addressbook was last updated on: " + timeStamp +"\n");
 
+        int personIndex = 1;
         for (ReadOnlyPerson person: addressBook.getAllPersons()) {
 
-            String entry = person.getAsTextHidePrivate();
+            String entry = personIndex + ". " + person.getAsTextHidePrivate();
             lines.add(entry);
+            lines.add("\n");
             temp.add(person);
+            personIndex++;
         }
-
 
         Path file = Paths.get("doc/books/"+filename+".txt");
         try {
