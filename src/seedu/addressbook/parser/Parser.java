@@ -18,11 +18,12 @@ import seedu.addressbook.commands.DeleteCommand;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.commands.HelpCommand;
-import seedu.addressbook.commands.WhyCommand;
 import seedu.addressbook.commands.IncorrectCommand;
 import seedu.addressbook.commands.ListCommand;
+import seedu.addressbook.commands.PrintCommand;
 import seedu.addressbook.commands.ViewAllCommand;
 import seedu.addressbook.commands.ViewCommand;
+import seedu.addressbook.commands.WhyCommand;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
@@ -45,6 +46,8 @@ public class Parser {
     public static final Pattern WHY_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<question>[^/]+)");//question to be asked : why not, though, this that etc...
 
+    public static final Pattern PRINT_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+            Pattern.compile("(?<filename>[^/]+)");//name of .txt file to be saved as
 
     /**
      * Signals that the user input could not be parsed.
@@ -106,6 +109,10 @@ public class Parser {
         case WhyCommand.COMMAND_WORD:
             //return new WhyCommand();
             return prepareWhy(arguments);
+
+        case PrintCommand.COMMAND_WORD:
+            //return new PrintCommand();
+            return preparePrint(arguments);
 
         case HelpCommand.COMMAND_WORD: // Fallthrough
         default:
@@ -231,6 +238,19 @@ public class Parser {
         {
             return new WhyCommand(
                     matcher.group("question")
+            );
+        }
+    }
+
+    private Command preparePrint(String args) {//WHY COMMAND preparation
+        final Matcher matcher = PRINT_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrintCommand.MESSAGE_USAGE));
+        }
+        {
+            return new PrintCommand(
+                    matcher.group("filename")
             );
         }
     }

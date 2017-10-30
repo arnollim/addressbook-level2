@@ -22,15 +22,17 @@ public class PrintCommand extends Command {
     public static final String COMMAND_WORD = "print";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Saves the addressbook into a txt file for your viewing.\n"
-            + "Example: " + COMMAND_WORD;
-
-    public static final String MESSAGE_SUCCESS = "Addressbook has been saved! " +
-            "Find your addressbook in the addressbook.txt file";
+            + ": Saves the addressbook into a .txt file named by you for your viewing.\n"
+            + "Example: " + COMMAND_WORD + "addressbook";
 
     public static String filename;
 
-    //public PrintCommand(String filename) {this.filename = filename;}
+
+    public PrintCommand(String filename) {this.filename = filename;}
+
+
+    public static final String MESSAGE_SUCCESS = "Addressbook has been saved! " +
+            "Find your addressbook in the .txt file named by you in the doc/books folder.";
 
     @Override
     public CommandResult execute(){
@@ -47,7 +49,7 @@ public class PrintCommand extends Command {
         }
 
 
-        Path file = Paths.get("addressbook.txt");
+        Path file = Paths.get("doc/books/"+filename+".txt");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException e) {
@@ -55,5 +57,5 @@ public class PrintCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
-    
+
 }
